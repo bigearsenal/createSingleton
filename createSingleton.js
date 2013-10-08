@@ -20,13 +20,13 @@
   // one object is needed to coordinate actions across the system.
   return function createSingleton(cb) {
     var args = Array.prototype.slice.call(arguments, 1);
-    var name = '__' + (cb.name || Math.random());
+    var instance;
 
     return function () {
-      if (arguments.callee[name]) {
-        return arguments.callee[name];
+      if (instance) {
+        return instance;
       }
-      arguments.callee[name] = this;
+      instance = this;
 
       cb.apply(this, args.length ? args : arguments);
     };
